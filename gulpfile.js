@@ -66,6 +66,7 @@
         branch(args.name, true);
 
         fs.appendFileSync(changeLog, args.name + " - " + args.description + "\n");
+        git.add(changeLog);
         git.commit("Created feature branch for " + args.name);
         git.push("origin", args.name);
     });
@@ -85,12 +86,15 @@
             updateVersion("prerelease");
 
             // Commit and push
+            git.add(bowerManifest);
+            git.add(nodeManifest);
             git.commit("Promoted v" + getVersion() + " to pre-release");
             git.push("origin", branchName, function() {
                 // Return to development branch
                 git.checkout(branches.development, function() {
                     // Clear change log
                     fs.writeFileSync(changeLog, "");
+                    git.add(changeLog);
                     git.commit("Promoted " + branchName + " - Cleared changeLog");
                     git.push("origin", branches.development);
                 });
