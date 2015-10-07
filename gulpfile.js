@@ -82,17 +82,19 @@
         }, function() {
 
             // Update the version.
-            updateVersion("prerelease")
-                .pipe(git.commit("Promoted v" + getVersion() + " to pre-release"))
-                .pipe(git.push("origin", branchName, function() {
-                    // Return to development branch
-                    git.checkout(branches.development, function() {
-                        // Clear change log
-                        fs.writeFileSync(changeLog, "");
-                        git.commit("Promoted " + branchName + " - Cleared changeLog");
-                        git.push("origin", branches.development);
-                    });
-                }));
+            updateVersion("prerelease");
+
+            // Commit and push
+            git.commit("Promoted v" + getVersion() + " to pre-release");
+            git.push("origin", branchName, function() {
+                // Return to development branch
+                git.checkout(branches.development, function() {
+                    // Clear change log
+                    fs.writeFileSync(changeLog, "");
+                    git.commit("Promoted " + branchName + " - Cleared changeLog");
+                    git.push("origin", branches.development);
+                });
+            });
         });
     });
 })();
