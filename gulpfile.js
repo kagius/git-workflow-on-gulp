@@ -2,6 +2,7 @@
     "use strict";
 
     var gulp = require("gulp");
+    var fs = require("fs");
     var args = require("yargs").argv;
     var git = require("gulp-git");
 
@@ -62,9 +63,13 @@
         git.pull("origin", branches.development);
 
         branch(args.name, true);
+
+        fs.appendFileSync(changeLog, args.name + " - " + args.description + "\n");
+        git.commit("Created feature branch for " + args.name);
+        git.push("origin", args.name);
     });
 
-    gulp.task("version-pre-release", function() {
+    gulp.task("promote-to-prerelease", function() {
         // Go to development branch.
         git.checkout(branches.development, onError);
 
