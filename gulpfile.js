@@ -18,6 +18,7 @@
     var manifestPath = gulp.dest("./");
     var bowerManifest = "./bower.json";
     var nodeManifest = "./package.json";
+    var changeLog = "./changeLog.txt";
 
     var onError = function(err) {
         if (err) throw err;
@@ -76,7 +77,7 @@
         var branchName = prefixes.releaseCandidate + getVersion();
 
         // Create a pre-release branch.
-        branch(prefixes.releaseCandidate + getVersion(), true);
+        branch(branchName, true);
 
         // Update the version.
         updateVersion("prerelease");
@@ -84,5 +85,13 @@
         // Commit and push
         git.commit("Promoted v" + getVersion() + " to pre-release");
         git.push("origin", branchName);
+
+        // Return to development branch
+        git.checkout(branches.development, onError);
+
+        // Clear change log
+        fs.writeFileSync(changeLog, "");
+        git.commit("Promoted " + branchName + " - Cleared changeLog");
+        git.push("origin", branches.development);
     });
 })();
