@@ -68,10 +68,16 @@
         // Go to development branch.
         git.checkout(branches.development, onError);
 
+        var branchName = prefixes.releaseCandidate + getVersion();
+
         // Create a pre-release branch.
         branch(prefixes.releaseCandidate + getVersion(), true);
 
         // Update the version.
         updateVersion("prerelease");
+
+        // Commit and push
+        git.commit("Promoted v" + getVersion() + " to pre-release");
+        git.push("origin", branchName);
     });
 })();
