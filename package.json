@@ -1,0 +1,28 @@
+{
+    "name": "git-workflow-on-gulp",
+    "version": "0.1.0",
+    "description": "Test for gulp managed git workflow",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kagius/git-workflow-on-gulp.git"
+    },
+    "keywords": [
+        "gulp",
+        "git"
+    ],
+    "author": "Karl Agius",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kagius/git-workflow-on-gulp/issues"
+    },
+    "homepage": "https://github.com/kagius/git-workflow-on-gulp",
+    "devDependencies": {
+        "bower": "^1.5.3",
+        "gulp": "^3.9.0",
+        "gulp-bump": "^1.0.0"
+    }
+}
