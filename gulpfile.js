@@ -77,21 +77,24 @@
         var branchName = prefixes.releaseCandidate + getVersion();
 
         // Create a pre-release branch.
-        branch(branchName, true);
+        git.checkout(branchName, {
+            "args": "-b"
+        }, function() {
 
-        // Update the version.
-        updateVersion("prerelease");
+            // Update the version.
+            updateVersion("prerelease");
 
-        // Commit and push
-        git.commit("Promoted v" + getVersion() + " to pre-release");
-        git.push("origin", branchName);
-
-        // Return to development branch
-        git.checkout(branches.development, onError);
-
-        // Clear change log
-        fs.writeFileSync(changeLog, "");
-        git.commit("Promoted " + branchName + " - Cleared changeLog");
-        git.push("origin", branches.development);
+            // Commit and push
+            git.commit("Promoted v" + getVersion() + " to pre-release");
+            git.push("origin", branchName, function() {
+                // Return to development branch
+                git.checkout(branches.development, function() {
+                    // Clear change log
+                    fs.writeFileSync(changeLog, "");
+                    git.commit("Promoted " + branchName + " - Cleared changeLog");
+                    git.push("origin", branches.development);
+                });
+            });
+        });
     });
 })();
