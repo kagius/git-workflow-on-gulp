@@ -1,28 +1,28 @@
-=Tasks=
+# Tasks
 
-==New feature==
+## New feature
 
-===Usage===
-'''
+### Usage
+```
 gulp new-feature --name {task name} --description {description}
-'''
-===Description===
+```
+### Description
 Creates a new feature branch with the task name, and adds a change log entry
 with the task name and the description.
 
 To do: Add the "feature" tag to the branch.
 
-===Example===
-'''
+### Example
+```
 gulp new-feature --name TST-004 --description "Add a readme file".
-'''
-==Promote to pre-release==
+```
+## Promote to pre-release
 
-===Usage===
-'''
+### Usage
+```
 gulp promote-to-prerelease
-'''
-===Description===
+```
+### Description
 Creates a new branch named "rc-{version}", where version is the current project version.
 The version numbers in the manifests in the branch will be updated to reflect the release version.
 
