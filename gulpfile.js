@@ -66,8 +66,8 @@
         branch(args.name, true);
 
         fs.appendFileSync(changeLog, args.name + " - " + args.description + "\n");
-        git.add(changeLog);
-        git.commit("Created feature branch for " + args.name);
+
+        gulp.src(changeLog).pipe(git.commit("Created feature branch for " + args.name));
         git.push("origin", args.name);
     });
 
